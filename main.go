@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	// get new deck and save it to file
 	deck := newDeck()
@@ -10,4 +12,12 @@ func main() {
 
 	cards.shuffle()
 	cards.print()
+
+	hand, _ := deal(cards, 5)
+
+	fmt.Println(hand)
+	cardsStr := deckToStruct(cards)
+
+	fmt.Println(cardsStr)
+
 }
