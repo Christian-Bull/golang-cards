@@ -14,7 +14,7 @@ import (
 type deck []string
 
 type Card struct {
-	suit  int
+	suit  string
 	value string
 }
 
@@ -77,13 +77,30 @@ func (d deck) shuffle() {
 }
 
 // changes deck type to a struct
-func deckToStruct(d deck) tDeck {
-	strDeck := []Card{}
-	dt := tDeck{strDeck}
+// func deckToStruct(d deck) tDeck {
+// 	strDeck := []Card{}
+// 	dt := tDeck{strDeck}
 
-	for k, v := range d {
-		item := Card{k, v}
-		dt.cards = append(dt.cards, item)
+// 	for k, v := range d {
+// 		item := Card{k, v}
+// 		dt.cards = append(dt.cards, item)
+// 	}
+// 	return dt
+// }
+
+// creates new struct of deck, need to depriciate the string method
+func newDeckStruct() tDeck {
+	cards := []Card{}
+	dt := tDeck{cards}
+
+	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
+	cardValues := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"}
+
+	for _, suit := range cardSuits {
+		for _, card := range cardValues {
+			c := Card{suit, card}
+			dt.cards = append(dt.cards, c)
+		}
 	}
 	return dt
 }

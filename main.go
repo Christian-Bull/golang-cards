@@ -16,8 +16,7 @@ func main() {
 	hand, _ := deal(cards, 5)
 
 	fmt.Println(hand)
-	cardsStr := deckToStruct(cards)
-
-	fmt.Println(cardsStr)
+	sDeck := newDeckStruct()
+	fmt.Println(sDeck)
 
 }
