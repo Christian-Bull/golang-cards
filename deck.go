@@ -2,10 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"math/rand"
-	"os"
-	"strings"
 	"time"
 )
 
@@ -22,48 +19,38 @@ type tDeck struct {
 	cards []Card
 }
 
-func newDeck() deck {
-	cards := deck{}
-
-	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
-	cardValues := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"}
-
-	for _, suit := range cardSuits {
-		for _, value := range cardValues {
-			cards = append(cards, value+" of "+suit)
-		}
-	}
-
-	return cards
-}
-
-func (d deck) print() {
-	for i, card := range d {
+func (d tDeck) print() {
+	for i, card := range d.cards {
 		fmt.Println(i, card)
 	}
 }
 
-func deal(d deck, handSize int) (deck, deck) {
-	return d[0:handSize], d[handSize:]
-}
-
-func (d deck) toString() string {
-	return strings.Join([]string(d), ",")
-}
-
-func (d deck) saveToFile(filename string) error {
-	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
-}
-
-func newDeckFromFile(filename string) deck {
-	bs, err := ioutil.ReadFile(filename)
-	if err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(1)
+func deal(d tDeck, handSize int) (tDeck, tDeck) {
+	var hand tDeck
+	for i := 0; i < handSize; i++ {
+		hand.cards = append(hand.cards, d.cards[i])
 	}
-	s := strings.Split(string(bs), ",")
-	return deck(s)
+	d.cards = d.cards[handSize:]
+	return hand, d
 }
+
+// func (d deck) toString() string {
+// 	return strings.Join([]string(d), ",")
+// }
+
+// func (d deck) saveToFile(filename string) error {
+// 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+// }
+
+// func newDeckFromFile(filename string) deck {
+// 	bs, err := ioutil.ReadFile(filename)
+// 	if err != nil {
+// 		fmt.Println("Error:", err)
+// 		os.Exit(1)
+// 	}
+// 	s := strings.Split(string(bs), ",")
+// 	return deck(s)
+// }
 
 func (d tDeck) shuffle() {
 	source := rand.NewSource(time.Now().UnixNano())
