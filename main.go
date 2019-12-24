@@ -5,7 +5,7 @@ func main() {
 	sDeck := newDeckStruct()
 
 	// test shuffle func
-	sDeck.shuffle()
+	//sDeck.shuffle()
 	//fmt.Println(sDec
 
 	sDeck.print()

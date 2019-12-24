@@ -8,11 +8,11 @@ import (
 
 // Create a new type of 'deck'
 // which is a slice of strings
-type deck []string
 
 type Card struct {
 	suit  string
-	value string
+	card  string
+	value int
 }
 
 type tDeck struct {
@@ -34,24 +34,6 @@ func deal(d tDeck, handSize int) (tDeck, tDeck) {
 	return hand, d
 }
 
-// func (d deck) toString() string {
-// 	return strings.Join([]string(d), ",")
-// }
-
-// func (d deck) saveToFile(filename string) error {
-// 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
-// }
-
-// func newDeckFromFile(filename string) deck {
-// 	bs, err := ioutil.ReadFile(filename)
-// 	if err != nil {
-// 		fmt.Println("Error:", err)
-// 		os.Exit(1)
-// 	}
-// 	s := strings.Split(string(bs), ",")
-// 	return deck(s)
-// }
-
 func (d tDeck) shuffle() {
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
@@ -63,29 +45,18 @@ func (d tDeck) shuffle() {
 	}
 }
 
-// changes deck type to a struct
-// func deckToStruct(d deck) tDeck {
-// 	strDeck := []Card{}
-// 	dt := tDeck{strDeck}
-
-// 	for k, v := range d {
-// 		item := Card{k, v}
-// 		dt.cards = append(dt.cards, item)
-// 	}
-// 	return dt
-// }
-
-// creates new struct of deck, need to depriciate the string method
+// creates new struct of deck
 func newDeckStruct() tDeck {
 	cards := []Card{}
 	dt := tDeck{cards}
 
 	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
-	cardValues := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"}
+	cardNames := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"}
+	cardValues := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11}
 
 	for _, suit := range cardSuits {
-		for _, card := range cardValues {
-			dt.cards = append(dt.cards, Card{suit, card})
+		for i := 0; i < len(cardNames); i++ {
+			dt.cards = append(dt.cards, Card{suit, cardNames[i], cardValues[i]})
 		}
 	}
 	return dt
