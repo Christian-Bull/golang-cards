@@ -11,5 +11,16 @@ func main() {
 	sDeck.print()
 
 	x := dealX(sDeck, 5, 3)
-	fmt.Println(x)
+	for _, v := range x {
+		v.print()
+		fmt.Println(v.handTotal())
+	}
+
+	h1 := hBlkJck(x)
+	for _, v := range h1 {
+		fmt.Println(v)
+	}
+
+	w := compareToDealer(h1[0], h1)
+	fmt.Println(w)
 }
